@@ -65,13 +65,6 @@ docker build -t fraud-risk-scoring .
 docker run -p 8000:8000 fraud-risk-scoring
 ```
 
-## Resume bullets (copy/paste)
-
-- Designed an ML fraud-scoring service with feature pipelines, model versioning, and REST inference API integrated into an analyst review workflow UI.
-- Trained gradient-boosted classifiers on synthetic high-volume transaction data; evaluated with ROC-AUC and PR-AUC, and exposed real-time fraud scores via FastAPI.
-- Implemented SHAP-based explanations to surface top risk drivers for flagged transactions, improving review transparency and triage speed.
-- Built population drift checks against training reference statistics to monitor feature distribution shifts in production-like traffic.
-
 ## Project structure
 
 ```
