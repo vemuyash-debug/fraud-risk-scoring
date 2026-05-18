@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fraud Review Dashboard</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="layout">
+    <header>
+      <h1>Fraud Risk Review</h1>
+      <p>Score transactions, review SHAP-based reasons, and prioritize analyst queues.</p>
+    </header>
+
+    <section class="card">
+      <h2>Transaction</h2>
+      <form id="txn-form" class="grid">
+        <label>Amount <input name="amount" type="number" step="0.01" value="12500" required /></label>
+        <label>Hour (0-23) <input name="hour" type="number" min="0" max="23" value="2" required /></label>
+        <label>Weekend (0/1) <input name="is_weekend" type="number" min="0" max="1" value="1" required /></label>
+        <label>Type
+          <select name="txn_type">
+            <option value="payment">payment</option>
+            <option value="transfer" selected>transfer</option>
+            <option value="cash_out">cash_out</option>
+            <option value="debit">debit</option>
+          </select>
+        </label>
+        <label>Balance Δ Origin <input name="balance_delta_origin" type="number" step="0.01" value="-12500" required /></label>
+        <label>Balance Δ Dest <input name="balance_delta_dest" type="number" step="0.01" value="12450" required /></label>
+        <label>Velocity 1h <input name="velocity_1h" type="number" min="0" value="9" required /></label>
+        <label>Velocity 24h <input name="velocity_24h" type="number" min="0" value="32" required /></label>
+        <label>Amount Z-score <input name="amount_zscore" type="number" step="0.01" value="2.8" required /></label>
+        <label>Merchant risk (0-1) <input name="merchant_risk_score" type="number" step="0.01" min="0" max="1" value="0.72" required /></label>
+        <label>Device trust (0-1) <input name="device_trust_score" type="number" step="0.01" min="0" max="1" value="0.28" required /></label>
+        <label>Geo distance (km) <input name="geo_distance_km" type="number" step="0.01" min="0" value="180" required /></label>
+      </form>
+      <div class="actions">
+        <button id="score-btn" type="button">Score transaction</button>
+        <button id="explain-btn" type="button" class="secondary">Explain why flagged</button>
+        <button id="sample-btn" type="button" class="ghost">Load high-risk sample</button>
+      </div>
+    </section>
+
+    <section class="card results" id="results" hidden>
+      <div class="score-row">
+        <div class="score" id="fraud-score">—</div>
+        <span id="risk-badge" class="badge">—</span>
+      </div>
+      <p id="summary" class="summary"></p>
+      <h3>Why flagged</h3>
+      <div id="shap-bars" class="bars"></div>
+      <p class="meta" id="model-meta"></p>
+    </section>
+
+    <section class="card" id="model-card">
+      <h2>Model</h2>
+      <pre id="model-info">Loading model metadata…</pre>
+    </section>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
